@@ -1,0 +1,33 @@
+<html>
+<head>
+	<title>666播放器 之 优酷</title>
+</head>
+<body>
+	正在加载播放器...
+
+<script>
+	var path = window.location.pathname;
+
+	var testers = [{
+		pattern: /\/v_show\/id_([A-Za-z0-9=]+).*\.html/,
+		processor: function () {
+//			console.log(arguments);
+			var videoId = arguments.length > 1 && arguments[1];
+			window.location.replace("/v_show/?id=" + encodeURIComponent(videoId));
+		}
+	}];
+
+	var i, t, match;
+	for (i = 0; i < testers.length; i++) {
+		t = testers[i];
+		match = path.match(t.pattern);
+
+		if (match) {
+			t.processor.apply(null, match);
+			break;
+		}
+	}
+</script>
+</body>
+</html>
+
